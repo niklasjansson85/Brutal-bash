@@ -5,8 +5,8 @@
 
   const img = document.getElementById("cardImage");
 
-  // ✅ om card saknas → visa standardbild
   if (!card) {
+    // ✅ fallback om card saknas
     img.src = "images/1.jpg";
   } else {
 
@@ -16,20 +16,22 @@
       folder = "vapen";
     }
 
-    // ✅ skapa URL
+    // ✅ försök ladda vald bild
     let mainSrc = folder + "/" + card + ".jpg?ts=" + Date.now();
+
+    // ✅ fallback (ALLTID fungerande)
     let fallbackSrc = "images/" + card + ".jpg?ts=" + Date.now();
 
-    // ✅ sätt bild
+    // ✅ sätt bild med fallback direkt
     img.src = mainSrc;
 
-    // ✅ fallback om något går fel
+    // ✅ om första misslyckas → fallback
     img.onerror = () => {
-      img.onerror = null;
+      img.onerror = null; // stoppa loop
       img.src = fallbackSrc;
     };
 
-    // ✅ glitch ibland
+    // ✅ när bild laddats
     img.onload = () => {
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
@@ -39,3 +41,4 @@
     };
   }
 </script>
+``
