@@ -5,24 +5,33 @@
 
   const img = document.getElementById("cardImage");
 
-  if (card) {
+  if (!card) {
+    // ✅ fallback om card saknas
+    img.src = "images/1.jpg";
+  } else {
 
     // ✅ välj mapp
     let folder = "images";
-
     if (type === "vapen") {
       folder = "vapen";
     }
 
     // ✅ försök ladda vald bild
-    img.src = folder + "/" + card + ".jpg?ts=" + Date.now();
+    let mainSrc = folder + "/" + card + ".jpg?ts=" + Date.now();
 
-    // ✅ FALLBACK – om något går fel
+    // ✅ fallback (ALLTID fungerande)
+    let fallbackSrc = "images/" + card + ".jpg?ts=" + Date.now();
+
+    // ✅ sätt bild med fallback direkt
+    img.src = mainSrc;
+
+    // ✅ om första misslyckas → fallback
     img.onerror = () => {
-      img.src = "images/" + card + ".jpg?ts=" + Date.now();
+      img.onerror = null; // stoppa loop
+      img.src = fallbackSrc;
     };
 
-    // ✅ glitch efter load
+    // ✅ när bild laddats
     img.onload = () => {
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
@@ -30,8 +39,6 @@
         img.classList.remove("glitch");
       }
     };
-
-  } else {
-    document.body.innerHTML = "<h1>Inget kort valt</h1>";
   }
 </script>
+``
