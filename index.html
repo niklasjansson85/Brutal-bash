@@ -13,3 +13,84 @@
 
     let folder = "images";
 
+    // ✅ Dynamiskt val av mapp + submapp
+    if (type) {
+      if (rarity) {
+        folder = type + "/" + rarity;
+      } else {
+        folder = type;
+      }
+    }
+
+    let path = folder + "/" + card + ".jpg";
+
+    // ✅ försök visa rätt bild
+    img.src = path;
+
+    // ✅ fallback om bilden saknas
+    img.onerror = () => {
+      img.style.display = "none";
+
+      document.body.innerHTML += `
+        <div style="
+          border:2px solid white;
+          padding:20px;
+          margin-top:20px;
+          border-radius:10px;
+        ">
+          <h2>Kort ${card}</h2>
+          <p>⚠ Bild saknas</p>
+        </div>
+      `;
+    };
+
+    // ✅ Visa type
+    if (type) {
+      document.body.innerHTML += `
+        <h2 style="margin-top:10px;">
+          ${type.toUpperCase()}
+        </h2>
+      `;
+    }
+
+    // ✅ Visa rarity med färg
+    if (rarity) {
+
+      let color = "white";
+
+      if (rarity === "common") color = "gray";
+      if (rarity === "uncommon") color = "green";
+      if (rarity === "rare") color = "blue";
+      if (rarity === "legendary") color = "gold";
+
+      document.body.innerHTML += `
+        <h3 style="color:${color};">
+          ${rarity.toUpperCase()}
+        </h3>
+      `;
+    }
+
+    // ✅ TEXT PER KORT (lägg till dina 80 här)
+    if (card == "1") {
+      document.body.innerHTML += `
+        <p>⚔️ Svärd</p>
+        <p>Attack +10</p>
+      `;
+    }
+
+    if (card == "2") {
+      document.body.innerHTML += `
+        <p>🛡️ Sköld</p>
+        <p>Defense +15</p>
+      `;
+    }
+
+    if (card == "3") {
+      document.body.innerHTML += `
+        <p>🔥 Eldsvärd</p>
+        <p>Attack +25</p>
+      `;
+    }
+
+  }
+</script>
