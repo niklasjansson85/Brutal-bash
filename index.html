@@ -1,22 +1,30 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   const card = params.get("card");
+  const type = params.get("type"); // 👈 NY
 
   const img = document.getElementById("cardImage");
 
-  if (card && img) {
+  if (card) {
 
-    // ✅ sätt bilden (cache-safe)
-    img.src = "images/" + card + ".jpg?ts=" + Date.now();
+    // 👇 välj mapp (images eller vapen)
+    let folder = "images";
 
-    // ✅ säker glitch-start efter render
-    setTimeout(() => {
+    if (type == "vapen") {
+      folder = "vapen";
+    }
+
+    // ✅ visa bild
+    img.src = folder + "/" + card + ".jpg?ts=" + Date.now();
+
+    img.onload = () => {
+      // ✅ glitch ibland
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
       } else {
         img.classList.remove("glitch");
       }
-    }, 150);
+    };
 
   } else {
     document.body.innerHTML = "<h1>Inget kort valt</h1>";
