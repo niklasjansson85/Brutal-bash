@@ -1,43 +1,27 @@
 <script>
+  const img = document.getElementById("cardImage");
+
+  // ✅ ALLTID visa denna först
+  img.src = "images/1.jpg";
+
   const params = new URLSearchParams(window.location.search);
   const card = params.get("card");
   const type = params.get("type");
 
-  const img = document.getElementById("cardImage");
-
-  // ✅ SÄKER STANDARD (visas direkt)
-  img.src = "images/1.jpg";
-
   if (card) {
 
     let folder = "images";
+
     if (type === "vapen") {
       folder = "vapen";
     }
 
-    let mainSrc = folder + "/" + card + ".jpg?ts=" + Date.now();
-    let fallbackSrc = "images/" + card + ".jpg?ts=" + Date.now();
+    let newSrc = folder + "/" + card + ".jpg";
 
-    // ✅ försök ladda rätt bild
-    let testImg = new Image();
+    // ✅ Försök ladda ny bild efter lite delay
+    setTimeout(() => {
+      img.src = newSrc;
+    }, 200);
 
-    testImg.onload = () => {
-      // ✅ om den finns → visa den
-      img.src = mainSrc;
-
-      if (Math.random() < 0.4) {
-        img.classList.add("glitch");
-      } else {
-        img.classList.remove("glitch");
-      }
-    };
-
-    testImg.onerror = () => {
-      // ✅ om den inte finns → fallback
-      img.src = fallbackSrc;
-    };
-
-    testImg.src = mainSrc;
   }
 </script>
-``
