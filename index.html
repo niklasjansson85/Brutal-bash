@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +23,7 @@
     /* GLITCH EFFECT */
     .glitch {
       animation: glitchAnim 0.2s infinite;
-      filter: contrast(150%) hue-rotate(10deg);
+      filter: contrast(150%) hue-rotate(20deg);
     }
 
     @keyframes glitchAnim {
@@ -45,17 +47,21 @@
   const card = params.get("card");
 
   if(card){
-    document.getElementById("cardImage").src =
-  "images/" + card + ".jpg?ts=" + new Date().getTime();
-    const params = new URLSearchParams(window.location.search);
-const card = params.get("card");
+    const img = document.getElementById("cardImage");
 
-if(card){
-  document.getElementById("cardImage").src =
-    "images/" + card + ".jpg?ts=" + new Date().getTime();
-} else {
-  document.body.innerHTML = "<h1>Inget kort valt</h1>";
-}
+    // ✅ Ladda bild + cache-fix
+    img.src = "images/" + card + ".jpg?ts=" + new Date().getTime();
+
+    // ✅ Vänta så mobilen hinner rendera
+    setTimeout(() => {
+
+      // ✅ Random glitch
+      if(Math.random() < 0.4){
+        img.classList.add("glitch");
+      }
+
+    }, 120);
+
   } else {
     document.body.innerHTML = "<h1>Inget kort valt</h1>";
   }
@@ -63,4 +69,3 @@ if(card){
 
 </body>
 </html>
-
