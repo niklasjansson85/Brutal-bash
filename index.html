@@ -47,6 +47,15 @@
   if(card){
     document.getElementById("cardImage").src =
   "images/" + card + ".jpg?ts=" + new Date().getTime();
+    const params = new URLSearchParams(window.location.search);
+const card = params.get("card");
+
+if(card){
+  document.getElementById("cardImage").src =
+    "images/" + card + ".jpg?ts=" + new Date().getTime();
+} else {
+  document.body.innerHTML = "<h1>Inget kort valt</h1>";
+}
   } else {
     document.body.innerHTML = "<h1>Inget kort valt</h1>";
   }
