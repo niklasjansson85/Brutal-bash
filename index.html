@@ -5,9 +5,9 @@
 
   const img = document.getElementById("cardImage");
 
+  // ✅ om card saknas → visa standardbild
   if (!card) {
-    // ✅ fallback om card saknas
-    <img id="cardImage" src="images/1.jpg">
+    img.src = "images/1.jpg";
   } else {
 
     // ✅ välj mapp
@@ -16,22 +16,20 @@
       folder = "vapen";
     }
 
-    // ✅ försök ladda vald bild
+    // ✅ skapa URL
     let mainSrc = folder + "/" + card + ".jpg?ts=" + Date.now();
-
-    // ✅ fallback (ALLTID fungerande)
     let fallbackSrc = "images/" + card + ".jpg?ts=" + Date.now();
 
-    // ✅ sätt bild med fallback direkt
+    // ✅ sätt bild
     img.src = mainSrc;
 
-    // ✅ om första misslyckas → fallback
+    // ✅ fallback om något går fel
     img.onerror = () => {
-      img.onerror = null; // stoppa loop
+      img.onerror = null;
       img.src = fallbackSrc;
     };
 
-    // ✅ när bild laddats
+    // ✅ glitch ibland
     img.onload = () => {
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
@@ -41,4 +39,3 @@
     };
   }
 </script>
-``
