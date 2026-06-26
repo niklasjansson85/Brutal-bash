@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brutalbash</title>
+</head>
+
+<body style="background:black; text-align:center; color:white; font-family:Arial;">
+
+<h1>Brutalbash</h1>
+
+<img id="cardImage" src="images/1.jpg" style="width:90%; max-width:400px;">
+
 <script>
   const img = document.getElementById("cardImage");
 
@@ -6,57 +18,27 @@
   const type = params.get("type");
   const rarity = params.get("rarity");
 
-  // ✅ ALLTID visa fallback direkt
+  // standardbild
   img.src = "images/1.jpg";
 
   if (card) {
 
     let folder = "images";
 
-    // ✅ välj mapp
-    if (type) {
-      if (rarity) {
-        folder = type + "/" + rarity;
-      } else {
-        folder = type;
-      }
+    if (type === "vapen") {
+      folder = "vapen";
+    }
+
+    if (type && rarity) {
+      folder = type + "/" + rarity;
     }
 
     let path = folder + "/" + card + ".jpg";
 
-    // ✅ försök visa rätt bild
     img.src = path;
 
-    // ✅ fallback så sidan ALDRIG blir vit
-    img.onerror = () => {
+    // fallback
+    img.onerror = function() {
       img.src = "images/1.jpg";
     };
 
-    // ✅ visa text (säkert sätt)
-    let info = "";
-
-    if (type) {
-      info += "<h2>" + type.toUpperCase() + "</h2>";
-    }
-
-    if (rarity) {
-      info += "<h3>" + rarity.toUpperCase() + "</h3>";
-    }
-
-    if (card == "1") {
-      info += "<p>⚔️ Svärd</p><p>Attack +10</p>";
-    }
-
-    if (card == "2") {
-      info += "<p>🛡️ Sköld</p><p>Defense +15</p>";
-    }
-
-    if (card == "3") {
-      info += "<p>🔥 Eldsvärd</p><p>Attack +25</p>";
-    }
-
-    // ✅ lägg till text på slutet (säkert!)
-    document.body.innerHTML += info;
-
-  }
-</script>
