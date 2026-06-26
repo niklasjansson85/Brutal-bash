@@ -1,24 +1,29 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   const card = params.get("card");
-  const type = params.get("type"); // 👈 NY
+  const type = params.get("type");
 
   const img = document.getElementById("cardImage");
 
   if (card) {
 
-    // 👇 välj mapp (images eller vapen)
+    // ✅ välj mapp
     let folder = "images";
 
-    if (type == "vapen") {
+    if (type === "vapen") {
       folder = "vapen";
     }
 
-    // ✅ visa bild
+    // ✅ försök ladda vald bild
     img.src = folder + "/" + card + ".jpg?ts=" + Date.now();
 
+    // ✅ FALLBACK – om något går fel
+    img.onerror = () => {
+      img.src = "images/" + card + ".jpg?ts=" + Date.now();
+    };
+
+    // ✅ glitch efter load
     img.onload = () => {
-      // ✅ glitch ibland
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
       } else {
