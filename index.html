@@ -1,71 +1,24 @@
-
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Brutalbash</title>
-
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #111;
-      color: white;
-    }
-
-    img {
-      width: 90%;
-      max-width: 400px;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-
-    /* GLITCH EFFECT */
-    .glitch {
-      animation: glitchAnim 0.2s infinite;
-      filter: contrast(150%) hue-rotate(20deg);
-    }
-
-    @keyframes glitchAnim {
-      0%   { transform: translate(0); }
-      25%  { transform: translate(-3px, 2px); }
-      50%  { transform: translate(3px, -2px); }
-      75%  { transform: translate(-2px, -1px); }
-      100% { transform: translate(0); }
-    }
-  </style>
-</head>
-
-<body>
-
-<h1>Brutalbash</h1>
-
-<img id="cardImage">
-
 <script>
   const params = new URLSearchParams(window.location.search);
   const card = params.get("card");
 
-  if(card){
-    const img = document.getElementById("cardImage");
+  const img = document.getElementById("cardImage");
 
-    // ✅ Ladda bild + cache-fix
-    img.src = "images/" + card + ".jpg?ts=" + new Date().getTime();
+  if (card && img) {
 
-    // ✅ Vänta så mobilen hinner rendera
+    // ✅ sätt bilden (cache-safe)
+    img.src = "images/" + card + ".jpg?ts=" + Date.now();
+
+    // ✅ säker glitch-start efter render
     setTimeout(() => {
-
-      // ✅ Random glitch
-      if(Math.random() < 0.4){
+      if (Math.random() < 0.4) {
         img.classList.add("glitch");
+      } else {
+        img.classList.remove("glitch");
       }
-
-    }, 120);
+    }, 150);
 
   } else {
     document.body.innerHTML = "<h1>Inget kort valt</h1>";
   }
 </script>
-
-</body>
-</html>
