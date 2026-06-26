@@ -1,8 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brutalbash</title>
+
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+
+    img {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Brutalbash</h1>
+
+<img id="cardImage" src="images/1.jpg">
+
 <script>
   const img = document.getElementById("cardImage");
-
-  // ✅ ALLTID visa denna först
-  img.src = "images/1.jpg";
 
   const params = new URLSearchParams(window.location.search);
   const card = params.get("card");
@@ -16,12 +40,11 @@
       folder = "vapen";
     }
 
-    let newSrc = folder + "/" + card + ".jpg";
+    let path = folder + "/" + card + ".jpg";
 
-    // ✅ Försök ladda ny bild efter lite delay
-    setTimeout(() => {
-      img.src = newSrc;
-    }, 200);
-
+    img.src = path;
   }
 </script>
+
+</body>
+</html>
