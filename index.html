@@ -5,40 +5,39 @@
 
   const img = document.getElementById("cardImage");
 
-  if (!card) {
-    // ✅ fallback om card saknas
-    img.src = "images/1.jpg";
-  } else {
+  // ✅ SÄKER STANDARD (visas direkt)
+  img.src = "images/1.jpg";
 
-    // ✅ välj mapp
+  if (card) {
+
     let folder = "images";
     if (type === "vapen") {
       folder = "vapen";
     }
 
-    // ✅ försök ladda vald bild
     let mainSrc = folder + "/" + card + ".jpg?ts=" + Date.now();
-
-    // ✅ fallback (ALLTID fungerande)
     let fallbackSrc = "images/" + card + ".jpg?ts=" + Date.now();
 
-    // ✅ sätt bild med fallback direkt
-    img.src = mainSrc;
+    // ✅ försök ladda rätt bild
+    let testImg = new Image();
 
-    // ✅ om första misslyckas → fallback
-    img.onerror = () => {
-      img.onerror = null; // stoppa loop
-      img.src = fallbackSrc;
-    };
+    testImg.onload = () => {
+      // ✅ om den finns → visa den
+      img.src = mainSrc;
 
-    // ✅ när bild laddats
-    img.onload = () => {
       if (Math.random() < 0.4) {
         img.classList.add("glitch");
       } else {
         img.classList.remove("glitch");
       }
     };
+
+    testImg.onerror = () => {
+      // ✅ om den inte finns → fallback
+      img.src = fallbackSrc;
+    };
+
+    testImg.src = mainSrc;
   }
 </script>
 ``
