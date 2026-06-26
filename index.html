@@ -37,13 +37,13 @@
 
     let folder = "images";
 
-    if (type === "vapen") {
-      folder = "vapen";
-    }
-
-    let path = folder + "/" + card + ".jpg";
-
-    img.src = path;
+if (type) {
+  if (rarity) {
+    folder = type + "/" + rarity;
+  } else {
+    folder = type;
+  }
+}
   }
 </script>
 
