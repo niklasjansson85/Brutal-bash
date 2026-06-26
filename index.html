@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Brutalbash</title>
-
-  <style>
-    body {
-      background: black;
-      color: white;
-      text-align: center;
-      font-family: Arial;
-    }
-
-    img {
-      width: 90%;
-      max-width: 400px;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-
-<body>
-
-<h1>Brutalbash</h1>
-
-<img id="cardImage" src="images/1.jpg">
-
 <script>
   const img = document.getElementById("cardImage");
 
@@ -37,15 +10,28 @@
 
     let folder = "images";
 
-if (type) {
-  if (rarity) {
-    folder = type + "/" + rarity;
-  } else {
-    folder = type;
-  }
-}
-  }
-</script>
+    if (type) {
+      if (rarity) {
+        folder = type + "/" + rarity;
+      } else {
+        folder = type;
+      }
+    }
 
-</body>
-</html>
+    let path = folder + "/" + card + ".jpg";
+
+    // ✅ visa bilden
+    img.src = path;
+
+    // ✅ om bilden saknas → visa text istället
+    img.onerror = () => {
+      img.style.display = "none";
+
+      document.body.innerHTML += `
+        <div style="
+          border:2px solid white;
+          padding:20px;
+          margin-top:20px;
+          border-radius:10px;
+        ">
+          <h2>Kort ${card}</h2>
