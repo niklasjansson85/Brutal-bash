@@ -6,32 +6,10 @@
   const type = params.get("type");
   const rarity = params.get("rarity");
 
+  // ✅ Standardbild (så inget blir vitt)
+  img.src = "images/1.jpg";
+
   if (card) {
 
     let folder = "images";
 
-    if (type) {
-      if (rarity) {
-        folder = type + "/" + rarity;
-      } else {
-        folder = type;
-      }
-    }
-
-    let path = folder + "/" + card + ".jpg";
-
-    // ✅ visa bilden
-    img.src = path;
-
-    // ✅ om bilden saknas → visa text istället
-    img.onerror = () => {
-      img.style.display = "none";
-
-      document.body.innerHTML += `
-        <div style="
-          border:2px solid white;
-          padding:20px;
-          margin-top:20px;
-          border-radius:10px;
-        ">
-          <h2>Kort ${card}</h2>
