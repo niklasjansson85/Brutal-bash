@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Brutalbash</title>
-
-  <style>
-    body {
-      background: black;
-      color: white;
-      text-align: center;
-      font-family: Arial;
-    }
-
-    img {
-      width: 90%;
-      max-width: 400px;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-
-<body>
-
-<h1>Brutalbash</h1>
-
-<img id="cardImage" src="images/1.jpg">
-
 <script>
   const img = document.getElementById("cardImage");
 
@@ -32,41 +5,45 @@
   const card = params.get("card");
   const type = params.get("type");
   const rarity = params.get("rarity");
+  const sub = params.get("sub"); // ✅ ny nivå
 
-  // ✅ ALLTID börja med fallback
+  // ✅ fallback
   img.src = "images/1.jpg";
 
   if (card) {
 
     let folder = "images";
 
-    // ✅ välj rätt mapp
     if (type) {
+
+      folder = type;
+
       if (rarity) {
-        folder = type + "/" + rarity;
-      } else {
-        folder = type;
+        folder += "/" + rarity;
+      }
+
+      if (sub) {
+        folder += "/" + sub;
       }
     }
 
-    let path = folder + "/" + card + ".jpg";
+    // ✅ OBS: här använder vi FILNAMN nu (inte bara 1.jpg)
+    let path = folder + "/" + card;
 
-    // ✅ TESTA först bilden innan vi visar den
+    // ✅ testa bild
     let testImg = new Image();
 
     testImg.onload = function () {
-      // ✅ om bilden finns → visa den
       img.src = path;
     };
 
     testImg.onerror = function () {
-      // ✅ om den inte finns → behåll fallback
       img.src = "images/1.jpg";
     };
 
     testImg.src = path;
 
-    // ✅ enkel text (så du ser att kort byts)
+    // ✅ enkel text
     document.body.innerHTML += "<p>Kort: " + card + "</p>";
 
     if (type) {
@@ -76,8 +53,10 @@
     if (rarity) {
       document.body.innerHTML += "<p>Rarity: " + rarity + "</p>";
     }
+
+    if (sub) {
+      document.body.innerHTML += "<p>Sub: " + sub + "</p>";
+    }
   }
 </script>
-
-</body>
-</html>
+``
